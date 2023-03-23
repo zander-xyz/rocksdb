@@ -148,7 +148,7 @@ LDBCommand* LDBCommand::InitFromCmdLineArgs(
 LDBCommand* LDBCommand::InitFromCmdLineArgs(
     const std::vector<std::string>& args, const Options& options,
     const LDBOptions& ldb_options,
-    const std::vector<ColumnFamilyDescriptor>* /*column_families*/,
+    const std::vector<ColumnFamilyDescriptor>* column_families,
     const std::function<LDBCommand*(const ParsedParams&)>& selector) {
   // --x=y command line arguments are added as x->y map entries in
   // parsed_params.option_map.

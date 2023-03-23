@@ -1,0 +1,4 @@
+[submodule "monad"]
+	path = monad
+	url = git@github.com:zander-xyz/monad.git
+	branch = 82ff3457055e59ee06198586014b727658c4d286

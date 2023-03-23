@@ -157,6 +157,9 @@ int LDBCommandRunner::RunCommand(
     return 1;
   }
 
+  assert(column_families);
+  cmdObj->SetColumnFamilies(column_families);
+
   if (!cmdObj->ValidateCmdLineOptions()) {
     return 1;
   }

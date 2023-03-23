@@ -34,6 +34,8 @@
 
 cmake_minimum_required(VERSION 3.10)
 
+set(WITH_GFLAGS OFF CACHE BOOL “” FORCE)
+
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake/modules/")
 include(ReadVersion)
 include(GoogleTest)
