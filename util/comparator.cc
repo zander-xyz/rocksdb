@@ -316,6 +316,16 @@ const Comparator* BytewiseComparatorWithU64Ts() {
   return &comp_with_u64_ts;
 }
 
+const Comparator* PathComparatorGet() {
+    STATIC_AVOID_DESTRUCTION(PathComparator, path);
+    return &path;
+}
+
+const Comparator* PrefixPathComparatorGet() {
+    STATIC_AVOID_DESTRUCTION(PrefixPathComparator, prefix_path);
+    return &prefix_path;
+}
+
 static int RegisterBuiltinComparators(ObjectLibrary& library,
                                       const std::string& /*arg*/) {
   library.AddFactory<const Comparator>(
@@ -349,6 +359,12 @@ Status Comparator::CreateFromString(const ConfigOptions& config_options,
                                               &id, &opt_map);
   if (!status.ok()) {  // GetOptionsMap failed
     return status;
+  }
+  if (id == "PathComparator 0.0.1") {
+      *result = PathComparatorGet();
+  }
+  else if (id == "PrefixPathComparator 0.0.1") {
+      *result = PrefixPathComparatorGet();
   }
   if (id == BytewiseComparatorImpl::kClassName()) {
     *result = BytewiseComparator();

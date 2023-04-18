@@ -6,7 +6,29 @@
 
 #include "rocksdb/sst_dump_tool.h"
 
+#include "rocksdb/comparator.h"
+#include "rocksdb/db.h"
+#include <iostream>
+
 int main(int argc, char** argv) {
   ROCKSDB_NAMESPACE::SSTDumpTool tool;
-  return tool.Run(argc, argv);
+  rocksdb::Options options;
+  options.max_open_files = 500;
+
+  rocksdb::PrefixPathComparator storage_comparator;
+  rocksdb::PathComparator account_comparator;
+
+  rocksdb::ColumnFamilyOptions storage_opts;
+  storage_opts.comparator = &storage_comparator;
+
+  rocksdb::ColumnFamilyOptions account_opts;
+  account_opts.comparator = &account_comparator;
+  std::vector<rocksdb::ColumnFamilyDescriptor> cfd = {
+      {rocksdb::kDefaultColumnFamilyName, {}},
+      {"StorageTrieLeaves", storage_opts},
+      {"StorageTrieAll", storage_opts},
+      {"AccountTrieLeaves", account_opts},
+      {"AccountTrieAll", account_opts},
+  };
+  return tool.Run(argc, argv, options);
 }
